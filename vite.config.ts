@@ -16,14 +16,6 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:8081",
         changeOrigin: true,
-        bypass(req) {
-          if (
-            req.url?.startsWith("/api/v2/user/callback") &&
-            req.headers.accept?.includes("text/html")
-          ) {
-            return "/index.html";
-          }
-        },
       },
     },
   },
