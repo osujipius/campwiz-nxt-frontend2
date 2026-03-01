@@ -23,6 +23,10 @@ const ProjectViewPage = lazy(() => import('./pages/project/ProjectView'))
 const ProjectCreatePage = lazy(() => import('./pages/project/ProjectCreate'))
 const ProjectEditPage = lazy(() => import('./pages/project/ProjectEdit'))
 const CampaignCreatePage = lazy(() => import('./pages/project/CampaignCreate'))
+const RoundEvaluatePage = lazy(() => import('./pages/round/RoundEvaluate'))
+const RoundEvaluatedPage = lazy(() => import('./pages/round/RoundEvaluated'))
+const EvaluationEditPage = lazy(() => import('./pages/round/EvaluationEdit'))
+const NotFoundPage = lazy(() => import('./pages/error/NotFound'))
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -49,13 +53,16 @@ function App() {
             <Route path="/campaign/:campaignId" element={<PrivateRoute><CampaignViewPage /></PrivateRoute>} />
             <Route path="/campaign/:campaignId/edit" element={<PrivateRoute><CampaignEditPage /></PrivateRoute>} />
             <Route path="/campaign/:campaignId/categorizer" element={<PrivateRoute><CampaignCategorizerPage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluate" element={<PrivateRoute><RoundEvaluatePage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluated" element={<PrivateRoute><RoundEvaluatedPage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluated/:evaluationId" element={<PrivateRoute><EvaluationEditPage /></PrivateRoute>} />
             <Route path="/project" element={<PrivateRoute><ProjectListPage /></PrivateRoute>} />
             <Route path="/project/new" element={<PrivateRoute><ProjectCreatePage /></PrivateRoute>} />
             <Route path="/project/:projectId" element={<PrivateRoute><ProjectViewPage /></PrivateRoute>} />
             <Route path="/project/:projectId/edit" element={<PrivateRoute><ProjectEditPage /></PrivateRoute>} />
             <Route path="/project/:projectId/new" element={<PrivateRoute><CampaignCreatePage /></PrivateRoute>} />
             <Route path="/" element={<SessionProvider requireAuth={false}><Dashboard /></SessionProvider>} />
-            <Route path="/*" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

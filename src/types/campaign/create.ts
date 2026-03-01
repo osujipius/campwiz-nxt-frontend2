@@ -29,7 +29,7 @@ export const initialCampaignCreate: CampaignCreate = {
     startDate: (new Date()).toISOString(),
     isPublic: false,
     status: RoundStatus.PENDING,
-    campaignType: CampaignType.OTHERS
+    campaignType: CampaignType.COMMONS
 }
 
 export interface CampaignUpdate extends CampaignCreate {

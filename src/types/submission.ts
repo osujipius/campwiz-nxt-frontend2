@@ -1,3 +1,6 @@
+import type { EvaluationType } from './round'
+import type { ResponseList } from './response'
+
 export interface Submission {
     submissionId: string
     title: string
@@ -22,6 +25,29 @@ export interface Submission {
     duration: number
     bitrate: number
     size: number
+}
+
+export interface Evaluation {
+    evaluationId: string
+    submissionId: string
+    judgeId: string
+    participantId: string
+    roundId: string
+    type: EvaluationType
+    score: number
+    comment: string
+    serial: number
+    submission: Submission | null
+    createdAt: string
+    updatedAt: string
+    evaluatedAt: string
+    skipExpirationAt: string
+    distributionTaskId: string
+}
+
+export type EvaluationListResponseWithCurrentStats = ResponseList<Evaluation> & {
+    totalEvaluatedCount: number
+    totalAssignmentCount: number
 }
 
 export type Category = {

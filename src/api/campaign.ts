@@ -20,10 +20,14 @@ export const updateCampaign = async (campaign: CampaignUpdate): Promise<Campaign
     if (campaign.coordinators.length === 0) throw new Error('At least one coordinator is required');
     if (campaign.language === '') throw new Error('You must select a language. If it is wikimedia Commons, select "commons"');
 
+    const payload = {
+        ...campaign,
+        coordinators: campaign.coordinators.map((c) => typeof c === 'string' ? c : c.username),
+    };
     const res = await fetchAPIFromBackendSingleWithErrorHandling<Campaign>(`/campaign/${campaign.campaignId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(campaign),
+        body: JSON.stringify(payload),
     });
     if ('detail' in res) throw new Error(res.detail);
     return res.data;
@@ -64,10 +68,14 @@ export const createCampaign = async (campaign: CampaignCreate): Promise<Campaign
     if (campaign.coordinators.length === 0) throw new Error('At least one coordinator is required');
     if (campaign.language === '') throw new Error('You must select a language. If it is wikimedia Commons, select "commons"');
 
+    const payload = {
+        ...campaign,
+        coordinators: campaign.coordinators.map((c) => typeof c === 'string' ? c : c.username),
+    };
     const res = await fetchAPIFromBackendSingleWithErrorHandling<Campaign>(`/campaign/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(campaign),
+        body: JSON.stringify(payload),
     });
     if ('detail' in res) throw new Error(res.detail);
     return res.data;

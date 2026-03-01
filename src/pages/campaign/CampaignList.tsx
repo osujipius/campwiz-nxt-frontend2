@@ -10,6 +10,7 @@ import Footer from "@/components/home/Footer";
 const CampaignListPage = () => {
     const { t } = useTranslation();
     const [searchParams] = useSearchParams();
+    const projectId = searchParams.get('projectId') || undefined;
     const [isClosed, setIsClosed] = useState<boolean | undefined>(searchParams.get('isClosed') === null ? undefined : searchParams.get('isClosed') === 'true');
     const [isHidden, setIsHidden] = useState<boolean | undefined>(searchParams.get('isHidden') === null ? undefined : searchParams.get('isHidden') === 'true');
     const [sortOrder, setSortOrder] = useState(searchParams.get('sortOrder') || 'desc');
@@ -70,7 +71,7 @@ const CampaignListPage = () => {
                         <MenuItem value="public">Public</MenuItem>
                     </TextField>
                 </Box>
-                <CList isClosed={isClosed} isHidden={isHidden} limit={limit} sortOrder={sortOrder} />
+                <CList isClosed={isClosed} isHidden={isHidden} limit={limit} sortOrder={sortOrder} projectId={projectId} />
             </Paper>
             <Footer />
         </>

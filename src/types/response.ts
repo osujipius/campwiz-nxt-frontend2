@@ -8,3 +8,8 @@ export type ResponseMultiple<T> = {
     data: T[];
     total: number;
 };
+export type ResponseList<T> = {
+    data: T[];
+    next?: string;
+    prev?: string;
+};

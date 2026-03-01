@@ -35,7 +35,7 @@ function RoundTimeline({ rounds, campaign, session, isCoordinator, isArchived }:
     const [currentRound, setCurrentRound] = React.useState<Round | null>(sortedRounds.length > 0 ? sortedRounds[0] : null);
     const isUserEligibleToVote = currentRound !== null && currentRound.jury !== null && session !== null && Object.values(currentRound.jury).includes(session.username);
     const [selectedRoundAction, setSelectedRoundAction] = React.useState<SelectedRoundActionStatus>(SelectedRoundActionStatus.none);
-    const categorizerAvailable = campaign.campaignType === CampaignType.OTHERS;
+    const categorizerAvailable = campaign.campaignType === CampaignType.Categorization;
 
     return (
         <Box sx={{ ml: 1 }} component="div">
