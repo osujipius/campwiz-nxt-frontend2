@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -10,12 +10,12 @@ import type { Campaign } from "@/types/campaign";
 import { campaignReducer, initialCampaignCreate } from "@/types/campaign/create";
 import CampaignEditForm from "@/components/campaign/CampaignEditForm";
 import ReturnButton from "@/components/ReturnButton";
-import { Button, LinearProgress, Paper, Skeleton, Typography } from "@mui/material";
+import { Button, CircularProgress, Paper, Skeleton, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
-import Header from "@/components/home/Header";
-import Footer from "@/components/home/Footer";
+import Logo from "@/components/Logo";
+import LoadingPopup from "@/components/LoadingPopup";
 
 const LottieWrapper = lazy(() => import("@/components/LottieWrapper"));
 
@@ -58,27 +58,46 @@ const CampaignCreateForm = ({ projectLeads, projectId }: { projectLeads: string[
         { onError: setError }
     );
 
-    return createdCampaign ? <CampaignCreationSuccess {...createdCampaign} /> : (
-        <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
-            <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
-                {t('campaign.createCampaign')}
-            </Typography>
-            {loading && <LinearProgress sx={{ mb: 2 }} />}
-            <CampaignEditForm {...campaign} loading={loading} dispatch={campaignDispatch} t={t} />
-            {error && <Typography variant="body1" color="error" sx={{ mb: 1 }}>{t(error.message)}</Typography>}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                <ReturnButton disabled={loading} sx={{ m: 0, borderRadius: 10, px: 2 }} />
-                <Button
-                    onClick={() => trigger().catch(setError)}
-                    variant="contained"
-                    color="success"
-                    disabled={loading}
-                    sx={{ borderRadius: 10 }}
-                    startIcon={<AddIcon />}
-                    loading={loading}
-                >
-                    {t('campaign.createCampaign')}
-                </Button>
+    return (
+        <div style={{
+            display: 'flex',
+            width: '100%', minHeight: '100vh',
+            justifyContent: 'center', alignItems: 'center',
+            backgroundImage: `url(/snowy-hill.svg)`,
+            backgroundRepeat: 'repeat-y',
+            backgroundSize: 'cover',
+        }}>
+            <div style={{
+                width: '100%', display: 'flex', minHeight: '100vh',
+                backgroundColor: 'rgba(255,255,255,0.4)',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {createdCampaign ? <CampaignCreationSuccess {...createdCampaign} /> :
+                    <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max m-auto"
+                        style={{ backgroundColor: 'rgba(248,246,246,0.8)' }}>
+                        <Logo />
+                        <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
+                            {t('campaign.createCampaign')}
+                        </Typography>
+                        {loading && <LoadingPopup src="/lottie/creating.lottie" />}
+                        <CampaignEditForm {...campaign} loading={loading} dispatch={campaignDispatch} t={t} />
+                        {error && <Typography variant="body1" color="error" sx={{ mb: 1 }}>{t(error.message)}</Typography>}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                            <ReturnButton disabled={loading} sx={{ m: 0, borderRadius: 10, px: 2 }} />
+                            <Button
+                                onClick={() => trigger().catch(setError)}
+                                variant="contained"
+                                color="success"
+                                disabled={loading}
+                                sx={{ borderRadius: 10 }}
+                                startIcon={<AddIcon />}
+                            >
+                                <CircularProgress size={24} color="inherit" sx={{ display: loading ? 'inline-block' : 'none', mr: 1 }} />
+                                {t('campaign.createCampaign')}
+                            </Button>
+                        </div>
+                    </div>}
             </div>
         </div>
     );
@@ -94,34 +113,18 @@ const CampaignCreatePage = () => {
     );
 
     if (isLoading) {
-        return (
-            <>
-                <Header returnTo={`/project/${projectId}`} />
-                <Skeleton variant="rectangular" width="100%" height={400} sx={{ m: 1 }} />
-            </>
-        );
+        return <Skeleton variant="rectangular" width="100%" height="100vh" />;
     }
 
     if (!projectResponse) return null;
     if ('detail' in projectResponse) {
-        return (
-            <>
-                <Header returnTo={`/project/${projectId}`} />
-                <Typography sx={{ m: 2 }}>{t(projectResponse.detail)}</Typography>
-            </>
-        );
+        return <Typography sx={{ m: 2 }}>{t(projectResponse.detail)}</Typography>;
     }
 
     const project = projectResponse.data;
     const projectLeads = project.projectLeads || [];
 
-    return (
-        <>
-            <Header returnTo={`/project/${projectId}`} />
-            <CampaignCreateForm projectLeads={projectLeads} projectId={projectId!} />
-            <Footer />
-        </>
-    );
+    return <CampaignCreateForm projectLeads={projectLeads} projectId={projectId!} />;
 }
 
 export default CampaignCreatePage;

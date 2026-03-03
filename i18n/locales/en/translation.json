@@ -29,6 +29,9 @@
     },
     "campaign": {
         "createCampaign": "Create Campaign",
+        "updateCampaign": "Update Campaign",
+        "updateSuccess": "Campaign Updated Successfully",
+        "updateSuccessDetail": "Campaign {{name}} has been updated.",
         "goToCampaign": "Go to Campaign",
         "showAllCampaigns": "Show All Campaigns",
         "activeCampaigns": "Active Campaigns",
@@ -48,6 +51,10 @@
     "project": {
         "title": "Projects",
         "createProject": "New Project",
+        "updateProject": "Update Project",
+        "updateSuccess": "Project Updated Successfully",
+        "updateSuccessDetail": "Project {{name}} has been updated with id {{projectId}}",
+        "leadsCanCreateCampaigns": "The project leads can create campaigns for this project.",
         "goToProject": "Go to Project",
         "showAllProjects": "Show All Projects",
         "projectLoading": "Loading project details...",

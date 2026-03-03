@@ -12,7 +12,7 @@ const AssignedCampaigns = lazy(() => import('@/components/campaign/AssignCampaig
 const Dashboard = () => {
   const session = useSession();
   const { t } = useTranslation()
-  
+
   return (
     <>
       <Header />
@@ -26,7 +26,7 @@ const Dashboard = () => {
       <div className="" style={{}}>
         <Typography variant="h4" sx={{
           textAlign: 'center', m: 3,
-           // backgroundImage: 'linear-gradient(to right, red 20%,  blue 80%)',
+          // backgroundImage: 'linear-gradient(to right, red 20%,  blue 80%)',
           backgroundClip: 'text'
         }} color='error'>
           {t('home.publicRunningCampaigns')}
