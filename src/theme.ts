@@ -25,6 +25,32 @@ declare module '@mui/material/IconButton' {
 const theme = createTheme({
   typography: {
     fontFamily: "'Cormorant Garamond', 'Roboto', sans-serif",
+    h1: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 700,
+      letterSpacing: '0.5px',
+    },
+    h2: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 700,
+      letterSpacing: '0.25px',
+    },
+    h3: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 600,
+    },
+    h4: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 600,
+    },
+    h5: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 500,
+    },
+    h6: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontWeight: 500,
+    },
   },
   colorSchemes: {
     dark: true,

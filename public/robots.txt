@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /project/
+Disallow: /round/
+Disallow: /submission/
+
+Sitemap: https://campwiz.toolforge.org/sitemap.xml
