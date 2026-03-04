@@ -11,8 +11,14 @@ export const fetchFromBackend = async (path: string, options?: RequestInit): Pro
         credentials: 'include',
     })
     const res = await fetch(`${baseURL}${path}`, options)
+    // Dispatch a session-expired event on 401 responses, except for the session
+    // fetch itself (to avoid infinite loops when genuinely unauthenticated).
+    if (res.status === 401 && !path.includes('/user/me')) {
+        window.dispatchEvent(new CustomEvent('campwiz:session-expired'));
+    }
     return res
 }
+
 export async function fetchAPIFromBackendSingleWithErrorHandling<T>(path: string, req?: RequestInit): Promise<ResponseSingle<T> | ResponseError> {
     try {
         console.log(`${API_PATH}${path}`, req)

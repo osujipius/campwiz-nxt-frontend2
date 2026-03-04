@@ -11,6 +11,7 @@ import type { TransitionProps } from '@mui/material/transitions'
 import DistributionStatusThingy from "./DistributionStatusThingy"
 import ImportFromCommonsDialog from "./ImportFromCommonsDialog"
 import ImportFromRoundDialog from "./ImportFromRoundDialog"
+import { useTranslation } from "react-i18next"
 
 const RoundEditForm = lazy(() => import("@/components/round/RoundEditForm"))
 
@@ -30,6 +31,7 @@ const Stage = {
 type Stage = typeof Stage[keyof typeof Stage];
 
 const CreateRound = ({ campaignId, onClose }: { campaignId: string; onAfterCreationSuccess: (round: Round) => void; onClose: () => void }) => {
+    const { t } = useTranslation()
     const [round, roundDispatch] = useReducer(roundCreateReducer, { ...initialRoundCreate, campaignId })
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -73,22 +75,38 @@ const CreateRound = ({ campaignId, onClose }: { campaignId: string; onAfterCreat
                 : <ImportFromCommonsDialog round={createdRound} onClose={onClose} distribute={distribute} />
         }
         if (stage === Stage.SUCCESS && latestTask) {
-            return <Dialog open onClose={onClose}>
-                <DialogContent>
-                    <Typography>Import successful. Task ID: {latestTask.taskId}</Typography>
-                    <Typography>Success: {latestTask.successCount}, Failed: {latestTask.failedCount}</Typography>
-                </DialogContent>
-                <DialogActions><Button onClick={onClose} variant="outlined" color="error">Close</Button></DialogActions>
-            </Dialog>
+            return (
+                <Dialog open onClose={onClose}>
+                    <DialogTitle>{t('round.importSuccessful')}</DialogTitle>
+                    <DialogContent>
+                        <Typography>Task ID: {latestTask.taskId}</Typography>
+                        <Typography gutterBottom>Total Imported: {latestTask.successCount}</Typography>
+                        <Typography gutterBottom>Total Failed: {latestTask.failedCount}</Typography>
+                        {typeof latestTask.failedIds === 'object' && Object.keys(latestTask.failedIds).length > 0 && (
+                            <Typography>
+                                Skipped files:
+                                <ul>
+                                    {Object.entries(latestTask.failedIds).map(([key, val]) => (
+                                        <li key={key}>{key} - {String(val)}</li>
+                                    ))}
+                                </ul>
+                            </Typography>
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onClose} variant="outlined" color="error">{t('close')}</Button>
+                    </DialogActions>
+                </Dialog>
+            )
         }
         return null
-    }, [createdRound, distribute, latestTask, onClose, stage])
+    }, [createdRound, distribute, latestTask, onClose, stage, t])
 
     return (createdRound && afterCreatedRound) ? afterCreatedRound : (
         <Dialog open={true}
             sx={{ width: { xs: '100%', sm: '80%' }, margin: 'auto', '& .MuiDialog-paper': { width: '100%', maxWidth: '100%' } }}
             slots={{ transition: Transition }} onClose={onClose}>
-            <DialogTitle>Create a new round</DialogTitle>
+            <DialogTitle>{t('round.createRoundTitle')}</DialogTitle>
             <DialogContent>
                 {error && <Typography variant="h6" color="error" sx={{ m: 2, textAlign: 'center' }}>{error}</Typography>}
                 {loading && <LoadingPopup src="/lottie/loading.lottie" />}
@@ -96,10 +114,10 @@ const CreateRound = ({ campaignId, onClose }: { campaignId: string; onAfterCreat
                 {stage === Stage.DISTRIBUTE && <DistributionStatusThingy taskId={taskId} onSuccess={console.log} />}
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'space-between', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-                <Button onClick={onClose} variant="outlined" color="error" disabled={loading}>Cancel</Button>
+                <Button onClick={onClose} variant="outlined" color="error" disabled={loading}>{t('close')}</Button>
                 {stage === Stage.CREATE
-                    ? <Button onClick={createRoundClient} variant="contained" color="success" disabled={loading} loading={loading}>Create Round</Button>
-                    : <Button onClick={onClose} variant="contained" color="error" disabled={loading}>Close</Button>}
+                    ? <Button onClick={createRoundClient} variant="contained" color="success" disabled={loading} loading={loading}>{t('round.createRound')}</Button>
+                    : <Button onClick={onClose} variant="contained" color="error" disabled={loading}>{t('close')}</Button>}
             </DialogActions>
         </Dialog>
     )

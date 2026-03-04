@@ -1,33 +1,62 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { useReducer, useState } from "react";
+import { lazy, useReducer, useState } from "react";
 import { fetchAPIFromBackendSingleWithErrorHandling } from "@/api";
 import { updateProject } from "@/api/project";
 import type { Project, ProjectUpdate } from "@/types/project";
 import { projectUpdateReducer } from "@/types/project";
 import ProjectEditForm from "@/components/project/ProjectEditForm";
 import ReturnButton from "@/components/ReturnButton";
-import { Button, LinearProgress, Skeleton, Typography } from "@mui/material";
+import { Button, LinearProgress, Paper, Skeleton, Typography } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
+import ArrowForward from "@mui/icons-material/ArrowForward";
 import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
+import Logo from "@/components/Logo";
 import usePermissions from "@/hooks/usePermissions";
+
+const LottieWrapper = lazy(() => import("@/components/LottieWrapper"));
+
+const ProjectUpdateSuccess = (c: Project) => {
+    return (
+        <Paper sx={{ padding: 2, textAlign: 'center', borderRadius: 7, maxWidth: 800, mx: 'auto', my: 4 }}>
+            <Logo />
+            <LottieWrapper src='/lottie/success.lottie' marginTop="-1em" />
+            <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', mt: -3 }} color='success'>
+                Project Updated Successfully
+            </Typography>
+            <Typography variant="subtitle1" sx={{ textAlign: 'center' }}>
+                Project <b>{c.name}</b> has been updated with id <b>{c.projectId}</b>
+            </Typography>
+            <Typography variant="subtitle1" sx={{ mb: 2, textAlign: 'center' }}>
+                Project Leads: {c.projectLeads.map((lead, i) => <b key={i}>{lead} </b>)}
+            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
+                <Link to={`/project/${c.projectId}`}>
+                    <Button variant="contained" color="success" endIcon={<ArrowForward />} sx={{ borderRadius: 7, mb: 2, mt: 1 }}>
+                        Go to Project
+                    </Button>
+                </Link>
+            </div>
+        </Paper>
+    );
+};
 
 const EditProjectForm = ({ initialProject }: { initialProject: ProjectUpdate }) => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const [error, setError] = useState<Error | null>(null);
     const [project, projectDispatch] = useReducer(projectUpdateReducer, initialProject);
-    const { trigger, isMutating: loading } = useSWRMutation<Project | undefined>(
+    const { data: updatedProject = null, trigger, isMutating: loading } = useSWRMutation<Project | undefined>(
         `/api/project/${initialProject.projectId}`,
         () => updateProject(project as ProjectUpdate),
-        {
-            onError: setError,
-            onSuccess: () => navigate(`/project/${initialProject.projectId}`),
-        }
+        { onError: setError }
     );
+
+    if (updatedProject) {
+        return <ProjectUpdateSuccess {...updatedProject} />;
+    }
 
     return (
         <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
@@ -104,7 +133,26 @@ const ProjectEditPage = () => {
     return (
         <>
             <Header returnTo={`/project/${projectId}`} />
-            <EditProjectForm initialProject={initialProject} />
+            <div style={{
+                backgroundImage: "url('/red-hill.svg')",
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                minHeight: 'calc(100vh - 128px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <div style={{
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    width: '100%',
+                    minHeight: 'calc(100vh - 128px)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <EditProjectForm initialProject={initialProject} />
+                </div>
+            </div>
             <Footer />
         </>
     );

@@ -29,6 +29,7 @@
   },
   "campaign": {
     "createCampaign": "প্রতিযোগিতা তৈরি করুন",
+    "updateCampaign": "Update Campaign",
     "goToCampaign": "প্রতিযোগিতায় চলুন",
     "showAllCampaigns": "সব প্রতিযোগিতা দেখুন",
     "activeCampaigns": "চলমান প্রতিযোগিতা",
@@ -61,6 +62,10 @@
   "round": {
     "addMyselfAsJury": "নিজেকে বিচারক হিসেবে যুক্ত করুন",
     "deleteRoundButton": "মুছুন",
+    "createRound": "Create Round",
+    "editRound": "Edit Round",
+    "createRoundTitle": "Create a new round",
+    "importSuccessful": "Import Successful",
     "confirmChangeStatus": "আপনি কি নিশ্চিত যে আপনি এই রাউন্ডটিকে {{status}} হিসেবে চিহ্নিত করতে চান?",
     "markAsComplete": "সম্পূর্ণ হিসেবে চিহ্নিত করুন",
     "status": {
@@ -101,6 +106,9 @@
     "deadLineInMinutes_one": "এক মিনিটের মধ্যে",
     "deadLineInMinutes_two": "দুই মিনিটের মধ্যে",
     "deadLineInMinutes_other": "{{count}} মিনিটের মধ্যে",
+    "deadLineInSeconds_one": "In a second",
+    "deadLineInSeconds_two": "In two seconds",
+    "deadLineInSeconds_other": "In {{count}} seconds",
     "deadLinePassed": "সময়সীমা পেরিয়ে গেছে",
     "quorum": "কোরাম",
     "quorumRequired_one": "প্রতিটি মিডিয়ায় একজন বিচারকের পর্যালোচনা প্রয়োজন",
@@ -121,6 +129,100 @@
     "translate": "অনুবাদ",
     "copyright": "© ২০২৫ <0>CampWiz NXT Team</0> কর্তৃক"
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "effectiveDate": "Effective Date:",
+    "intro": "At <strong>CampWiz NXT</strong>, your privacy is important to us. This Privacy Policy outlines what information we collect, why we collect it, and how we use it.",
+    "infoWeCollect": {
+      "title": "Information We Collect",
+      "intro": "We only collect the following publicly available information:",
+      "username": "Public Wikimedia Username",
+      "registrationDate": "Date of Registration on Wikimedia projects",
+      "ipAddress": "Public IP Address for using our tool",
+      "outro": "This information is essential for CampWiz NXT to function properly, including managing campaigns, verifying user eligibility, and maintaining fairness."
+    },
+    "cookies": {
+      "title": "Use of Cookies",
+      "intro": "We use cookies solely for:",
+      "authentication": "Authentication – to verify your identity during sessions (Using OAuth2.0)",
+      "authorization": "Authorization – to determine access levels and features based on your role (Using JWT Token)",
+      "outro": "We do <strong>not</strong> use cookies for tracking, advertising, or analytics."
+    },
+    "monitoring": {
+      "title": "User Activity Monitoring",
+      "intro": "To detect abuse and ensure fair usage of the platform, we monitor user actions such as:",
+      "campaignCreation": "Campaign creation",
+      "projectCreation": "Project creation",
+      "roundCreation": "Round creation",
+      "outro": "However, we <strong>do not monitor</strong> which jury evaluated which submission, or the scores they gave. Jury evaluations remain private within the system and are not linked to individual evaluators for monitoring purposes."
+    },
+    "errorMonitoring": {
+      "title": "Error Monitoring and Performance",
+      "intro": "To prevent abuse and improve system performance, we use <strong>Sentry &trade;</strong>, an error tracking and performance monitoring service.",
+      "dataIntro": "We send the following limited data to Sentry&trade;:",
+      "username": "Your Wikimedia Username",
+      "internalId": "Your Internal CampWiz NXT ID",
+      "noIp": "Sentry&trade; <strong>does not</strong> receive your IP address or any personally identifiable information. We've configured Sentry to avoid tracking or storing data that could compromise your privacy.",
+      "learnMore": "For more information, please refer to Sentry&trade;'s Privacy Policy: <0>https://sentry.io/trust/privacy/</0>."
+    },
+    "dataSharing": {
+      "title": "Data Sharing and Retention",
+      "noSell": "We <strong>do not sell, share, or disclose</strong> your account data to any third parties not mentioned in this policy. But we do provide submission results to the appropriate rightholders to use in any way they want with best of our intentions to be <0>good faith</0>.",
+      "internalUse": "Data is only used internally for campaign and jury processes.",
+      "retention": "We retain data only for as long as it's needed to support the functionality of CampWiz NXT."
+    },
+    "yourRights": {
+      "title": "Your Rights",
+      "content": "Because we only use publicly available and minimal information, we do not store sensitive personal data. If you have any questions or concerns about your data or privacy, please contact us at <0>support@wikilovesfolklore.org</0>."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "effectiveDate": "Effective Date:",
+    "intro": "Welcome to <strong>CampWiz NXT</strong>. By using our services, you agree to the following Terms of Service. If you do not agree with any of these terms, please do not use our platform.",
+    "eligibility": {
+      "title": "1. Eligibility",
+      "content": "You must have an active Wikimedia account to use CampWiz NXT. The username and date of registration must be publicly visible."
+    },
+    "acceptableUse": {
+      "title": "2. Acceptable Use",
+      "intro": "You agree not to misuse CampWiz NXT. This includes, but is not limited to:",
+      "fraudulent": "Creating fraudulent or duplicate campaigns",
+      "exploiting": "Exploiting bugs or vulnerabilities in the system",
+      "unauthorized": "Attempting to gain unauthorized access to data"
+    },
+    "userData": {
+      "title": "3. User Data",
+      "content": "We only collect publicly available Wikimedia usernames and registration dates. Your data is used solely for campaign and jury process functionalities. Refer to our <0>Privacy Policy</0> for more information."
+    },
+    "monitoring": {
+      "title": "4. Monitoring and Abuse Prevention",
+      "intro": "To maintain fairness and prevent abuse, we may monitor the following activities:",
+      "campaignCreation": "Campaign creation",
+      "projectRound": "Project and round creation",
+      "outro": "Jury evaluations and scores are not monitored or associated with individual jury members."
+    },
+    "serviceAvailability": {
+      "title": "5. Service Availability",
+      "content": "We strive to keep CampWiz NXT online and functional, but we do not guarantee uninterrupted access. We may suspend access for maintenance, updates, or in case of abuse."
+    },
+    "disclaimer": {
+      "title": "6. Disclaimer",
+      "content": "CampWiz NXT is provided \"as is\" without warranties of any kind. We are not liable for any issues arising from the use of the platform, including data loss or access issues."
+    },
+    "immunity": {
+      "title": "7. Immunity Clause",
+      "content": "The developers, maintainers, and affiliates of CampWiz NXT are not responsible for the misuse of the tool by its users, nor for the decisions made during campaign management or jury evaluations. By using this platform, you agree not to hold us liable for actions performed by third parties, including but not limited to organizers, jurors, or participants in any campaign hosted via CampWiz NXT."
+    },
+    "changes": {
+      "title": "8. Changes to These Terms",
+      "content": "We may update these Terms from time to time. Continued use of the platform after changes are posted implies acceptance of the new Terms."
+    },
+    "contact": {
+      "title": "9. Contact",
+      "content": "If you have any questions about these Terms, contact us at <0>support@wikilovesfolklore.org</0>."
+    }
+  },
   "error": {
     "noAssignedCampaigns": "কোনও প্রতিযোগিতা নেই",
     "loadingSubmissionDetails": "জমা দেওয়ার বিবরণ লোড করা যায়নি: {{error}}",
@@ -132,28 +234,42 @@
     "noCategoriesAvailable": "কোন বিষয়শ্রেণী পাওয়া যায় নি",
     "noSubmissions": "কোনও জমা পাওয়া যায় নি",
     "noRunningCampaigns": "কোনও চলমান প্রতিযোগিতা নেই",
+    "noCoordinators": "No coordinators assigned to this campaign",
     "loadingMyProject": "আপনার প্রোজেক্ট লোড করা যায়নি",
     "loadingProjects": "প্রোজেক্ট লোড করা যায়নি",
     "accessDeniedToProject": "এই প্রকল্পে আপনার প্রবেশাধিকার নেই",
     "failedToFetchProject": "আপনার প্রকল্পটি আনা যায়নি",
     "failedToFetchCampaign": "প্রতিযোগিতার বিবরণ আনা যায় নি",
-    "failedToFetchRound": "রাউন্ডের বিবরণ আনা যায়নি"
+    "failedToFetchRound": "রাউন্ডের বিবরণ আনা যায়নি",
+    "onlyAdminOrProjectLeadCanEdit": "Only an admin or project lead can edit this campaign",
+    "notAllowedToAccessProject": "You are not allowed to access this project",
+    "notAllowedToCreateProject": "You are not allowed to create a project",
+    "categorizerOnlyForCategorizationCampaigns": "The categorizer is only available for categorization campaigns"
   },
   "close": "বন্ধ করুন",
   "previous": "পূর্ববর্তী",
   "next": "পরবর্তী",
   "return": "ফিরে যান",
   "evaluation": {
+    "modifyTable": {
+      "name": "Name",
+      "score": "Score",
+      "preview": "Preview",
+      "action": "Action"
+    },
+    "skip": "এড়িয়ে যান",
+    "edit": "ভোট পরিবর্তন করুন",
+    "yes": "হ্যাঁ",
+    "no": "না",
+    "voteSavedSuccessfully": "Your vote has been saved successfully.",
+    "modifyAgain": "Modify Again",
+    "goToList": "Go to the List",
     "modifytable": {
       "name": "নাম",
       "score": "স্কোর",
       "preview": "প্রাকদর্শন",
       "action": "কার্য"
-    },
-    "skip": "এড়িয়ে যান",
-    "edit": "ভোট পরিবর্তন করুন",
-    "yes": "হ্যাঁ",
-    "no": "না"
+    }
   },
   "submission": {
     "title": "শিরোনাম",
@@ -162,6 +278,7 @@
     "viewOnCommons": "কমন্সে দেখুন",
     "categories": "বিষয়শ্রেণীসমূহ",
     "selectCategories": "বিষয়শ্রেণী নির্বাচন",
+    "noCategoriesSelected": "No categories selected",
     "save": "সংরক্ষণ",
     "cancel": "বাতিল",
     "skip": "এড়িয়ে যান",

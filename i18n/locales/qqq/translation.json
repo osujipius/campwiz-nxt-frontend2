@@ -29,6 +29,7 @@
   },
   "campaign": {
     "createCampaign": "Create Campaign",
+    "updateCampaign": "Update Campaign",
     "goToCampaign": "Go to Campaign",
     "showAllCampaigns": "Show All Campaigns",
     "activeCampaigns": "Heading for the list of the campaigns which are currently running.",
@@ -61,6 +62,10 @@
   "round": {
     "addMyselfAsJury": "In case of public campaigns, any user can join the jury panel by clicking on this button.",
     "deleteRoundButton": "Label for Deleting a round which would cause all the submissions and evaluations of the corresponding rounds to be deleted as well.",
+    "createRound": "Create Round",
+    "editRound": "Edit Round",
+    "createRoundTitle": "Create a new round",
+    "importSuccessful": "Import Successful",
     "confirmChangeStatus": "A confirmation message when user clicks any button to change the status of the round. Here  <code><nowiki>{{status}}</nowiki></code> would be replaced with the target status (the status this round would get after this action is executed).",
     "markAsComplete": "A Label for the button to Mark the round as Completed. After this, coordinators can download the results and juries can no longer submit votes or modify votes.",
     "status": {
@@ -101,6 +106,9 @@
     "deadLineInMinutes_one": "When the Deadline would come within one minute.",
     "deadLineInMinutes_two": "When the Deadline would come within two minutes.",
     "deadLineInMinutes_other": "When the Deadline would come within <code><nowiki>{{count}}</nowiki></code> minutes. Here <code><nowiki>{{count}}</nowiki></code> would be replaced with the number of minutes and is greater than two (so, plural).",
+    "deadLineInSeconds_one": "In a second",
+    "deadLineInSeconds_two": "In two seconds",
+    "deadLineInSeconds_other": "In {{count}} seconds",
     "deadLinePassed": "When the current time has passed the deadline.",
     "quorum": "The minimum number of jury votes required for each submission to be considered as evaluated properly. For example, if Quorum is 3, then each image must be voted by at least 3 different jury to be considered the round complete.",
     "quorumRequired_one": "When each image needs only one vote to be considered evaluated.",
@@ -226,28 +234,42 @@
     "noCategoriesAvailable": "No categories available. This error would be shown when there are no categories available for selection. This label would be shown in the categorization page",
     "noSubmissions": "No submissions available. This error would be shown when there are no submissions available for evaluation or categorization. This label would be shown in the evaluation page",
     "noRunningCampaigns": "A Phrase when no campaigns are running",
+    "noCoordinators": "No coordinators assigned to this campaign",
     "loadingMyProject": "An error message indicating that the project associated with the current logged in user could not be loaded due to some error.",
     "loadingProjects": "An error message indicating the failure to load the list of projects",
     "accessDeniedToProject": "Error Message if the User does not have access to this project",
     "failedToFetchProject": "An error message indicating that the project associated with the current logged in user could not be loaded due to some error.",
     "failedToFetchCampaign": "An error message indicating that the corresponding campaign details could not be loaded due to some error.",
-    "failedToFetchRound": "An error message indicating that the corresponding round details could not be loaded due to some error."
+    "failedToFetchRound": "An error message indicating that the corresponding round details could not be loaded due to some error.",
+    "onlyAdminOrProjectLeadCanEdit": "Only an admin or project lead can edit this campaign",
+    "notAllowedToAccessProject": "You are not allowed to access this project",
+    "notAllowedToCreateProject": "You are not allowed to create a project",
+    "categorizerOnlyForCategorizationCampaigns": "The categorizer is only available for categorization campaigns"
   },
   "close": "{{Identical|Close}}\nLabel for a generic close button. For example, the user can click on the close to close a modal or a dialog box",
   "previous": "{{Identical|Previous}}",
   "next": "{{Identical|Next}}",
   "return": "{{identical|Return}}\n\nUsed in:\n\n[https://phabricator.wikimedia.org/source/phabricator/browse/wmf%252Fstable/src//applications/diviner/controller/DivinerAtomController.php$611 DivinerAtomController.php:611]",
   "evaluation": {
+    "modifyTable": {
+      "name": "Name",
+      "score": "Score",
+      "preview": "Preview",
+      "action": "Action"
+    },
+    "skip": "Label for a button that allows the user to skip the submission. For example, the user can click on the skip to skip the submission and go to the next submission",
+    "edit": "Label for a button that allows the user to modify vote or score of the submission. For example, the user can click on the edit to change the score of the submission",
+    "yes": "Label for a button that allows the user to accept the submission. For example, the user can click on the yes to accept the submission",
+    "no": "Label for a button that allows the user to reject the submission. For example, the user can click on the no to reject the submission",
+    "voteSavedSuccessfully": "Your vote has been saved successfully.",
+    "modifyAgain": "Modify Again",
+    "goToList": "Go to the List",
     "modifytable": {
       "name": "Label for the name of the submission.",
       "score": "{{Identical|Score}}",
       "preview": "Label for a button in the modify table that allows the user to preview the submission. For example, the user can click on the preview to see the submission",
       "action": "Label for list of Action the user can take on this assignment. For example, the user can click on the preview to see the submission, or click on the edit to change the score of the submission"
-    },
-    "skip": "Label for a button that allows the user to skip the submission. For example, the user can click on the skip to skip the submission and go to the next submission",
-    "edit": "Label for a button that allows the user to modify vote or score of the submission. For example, the user can click on the edit to change the score of the submission",
-    "yes": "Label for a button that allows the user to accept the submission. For example, the user can click on the yes to accept the submission",
-    "no": "Label for a button that allows the user to reject the submission. For example, the user can click on the no to reject the submission"
+    }
   },
   "submission": {
     "title": "Title of the submission",
@@ -256,6 +278,7 @@
     "viewOnCommons": "Link to view the file on Commons. The whole phrase is linked.",
     "categories": "{{Identical|Category}}",
     "selectCategories": "{{Identical|Select category}}",
+    "noCategoriesSelected": "No categories selected",
     "save": "{{Identical|Save}}",
     "cancel": "{{Identical|Cancel}}",
     "skip": "{{Identical|Skip}}",

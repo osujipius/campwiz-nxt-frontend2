@@ -6,9 +6,12 @@ import { useState } from "react";
 import ThemeSwitcherButton from "@/components/home/ThemeSwitcherButton";
 import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import useSession from "@/hooks/useSession";
 
 const SettingsPage = ({ onClose }: { onClose: () => void }) => {
     const { t, i18n } = useTranslation()
+    const { session } = useSession();
     const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
     const [refreshNeeded, setRefreshNeeded] = useState(false);
     
@@ -65,6 +68,19 @@ const SettingsPage = ({ onClose }: { onClose: () => void }) => {
                 </div>
             </DialogContent>
             <DialogActions>
+                {session && (
+                    <Button
+                        component={Link}
+                        to="/user/profile"
+                        onClick={onClose}
+                        color="primary"
+                        variant="text"
+                        startIcon={<PersonIcon />}
+                        sx={{ mr: 'auto' }}
+                    >
+                        {t('settings.viewProfile', 'View Profile')}
+                    </Button>
+                )}
                 <Button onClick={handleClose} color="primary" variant="outlined">
                     {t('close')}
                 </Button>

@@ -1,5 +1,10 @@
 import { createContext } from "react";
-import type { Session } from "../types/session";
+import type { SessionContextType } from "../types/session";
 
-const sessionContext = createContext<Session | null>(null);
+const sessionContext = createContext<SessionContextType>({
+    session: null,
+    setSession: () => {},
+    isExpired: false,
+    setIsExpired: () => {},
+});
 export default sessionContext;

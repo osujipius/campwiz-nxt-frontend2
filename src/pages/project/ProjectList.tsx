@@ -7,12 +7,12 @@ import AddIcon from '@mui/icons-material/Add';
 import SingleProjectChip from "@/components/project/SingleProjectChip";
 import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
-import useSession from "@/hooks/useSession";
+import usePermissions from "@/hooks/usePermissions";
 import { Link } from "react-router-dom";
 
 const ProjectListPage = () => {
     const { t } = useTranslation();
-    const session = useSession();
+    const { session, isAdmin: canAccessOtherProject } = usePermissions();
     const sessionProjectId = session?.projectId ?? null;
 
     const { data: projectsResponse, isLoading: listLoading } = useSWR(
@@ -27,8 +27,6 @@ const ProjectListPage = () => {
         !myProjectInList && sessionProjectId ? `/project/${sessionProjectId}?includeProjectLeads=true` : null,
         fetchAPIFromBackendSingleWithErrorHandling<Project>
     );
-
-    const canAccessOtherProject = session && (session.permission & session.permissionMap.PermissionOtherProjectAccess) === session.permissionMap.PermissionOtherProjectAccess;
 
     if (listLoading || ownLoading) {
         return (

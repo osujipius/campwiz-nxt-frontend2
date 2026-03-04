@@ -12,6 +12,7 @@ import Footer from "@/components/home/Footer";
 import EditButton from "@/components/campaign/EditButton";
 import ArchiveUnArchiveButton from "@/components/campaign/ArchiveUnArchiveButton";
 import useSession from "@/hooks/useSession";
+import usePermissions from "@/hooks/usePermissions";
 import RoundTimeline from "@/components/campaign/RoundTimeline";
 
 const CoordinatorList = ({ coordinators }: { coordinators: WikimediaUsername[] | null }) => {
@@ -30,7 +31,8 @@ const CoordinatorList = ({ coordinators }: { coordinators: WikimediaUsername[] |
 const CampaignViewPage = () => {
     const { campaignId } = useParams<{ campaignId: string }>();
     const { t } = useTranslation();
-    const session = useSession();
+    const { session } = useSession();
+    const { isAdmin } = usePermissions();
 
     const qs = new URLSearchParams({
         includeRoles: 'true',
@@ -65,7 +67,7 @@ const CampaignViewPage = () => {
 
     const campaign = campaignResponse.data;
     const isArchived = campaign.archivedAt !== null;
-    const canAccessOtherProject = session && (session.permission & session.permissionMap.PermissionOtherProjectAccess) === session.permissionMap.PermissionOtherProjectAccess;
+    const canAccessOtherProject = isAdmin;
     const canUpdate = canAccessOtherProject || session?.projectId === campaign.projectId;
     const canArchive = session?.projectId === campaign.projectId;
     const isCoordinator = campaign.coordinators?.some(

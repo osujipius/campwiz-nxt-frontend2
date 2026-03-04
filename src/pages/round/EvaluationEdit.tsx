@@ -12,32 +12,36 @@ import EditIcon from '@mui/icons-material/Edit'
 import ArrowBackward from '@mui/icons-material/ArrowBack'
 import Header from '@/components/home/Header'
 import ScoreOrBinaryVotingInterface from '@/components/evaluation/BinaryOrScoreVotingInterface'
+import { useTranslation } from 'react-i18next'
 
-const SavingSuccess = ({ returnTo, close }: { returnTo: string; close: () => void }) => (
-    <div className="flex flex-col items-center justify-center h-screen">
-        <TickIcon className="text-green-500" fontSize="large" />
-        <div className="text-lg mt-4">Your vote has been saved successfully.</div>
-        <Link to={returnTo} className="mt-4 text-blue-500 hover:underline">
+const SavingSuccess = ({ returnTo, close }: { returnTo: string; close: () => void }) => {
+    const { t } = useTranslation()
+    return (
+        <div className="flex flex-col items-center justify-center h-screen">
+            <TickIcon className="text-green-500" fontSize="large" />
+            <div className="text-lg mt-4">{t('evaluation.voteSavedSuccessfully')}</div>
+            <Link to={returnTo} className="mt-4 text-blue-500 hover:underline">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<ArrowBackward />}
+                    sx={{ borderRadius: 3, m: 1 }}
+                >
+                    {t('evaluation.goToList')}
+                </Button>
+            </Link>
             <Button
-                variant="contained"
-                color="primary"
-                startIcon={<ArrowBackward />}
+                variant="outlined"
+                color="secondary"
+                startIcon={<EditIcon />}
                 sx={{ borderRadius: 3, m: 1 }}
+                onClick={close}
             >
-                Go to the List
+                {t('evaluation.modifyAgain')}
             </Button>
-        </Link>
-        <Button
-            variant="outlined"
-            color="secondary"
-            startIcon={<EditIcon />}
-            sx={{ borderRadius: 3, m: 1 }}
-            onClick={close}
-        >
-            Modify Again
-        </Button>
-    </div>
-)
+        </div>
+    )
+}
 
 const EvaluationEditPage = () => {
     const { roundId, evaluationId } = useParams<{ roundId: string; evaluationId: string }>()

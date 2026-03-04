@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button"
-import { CircularProgress, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, CircularProgress, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import LoginBackground from '@/assets/login5.gif';
@@ -17,6 +17,7 @@ interface RedirectResponse {
 const LoginComponent = ({ }: { isMobile: boolean }) => {
     const searchParams = new URLSearchParams(window.location.search);
     const next = searchParams.get('next');
+    const reason = searchParams.get('reason');
     const pathName = searchParams.get('pathName') || '/user/login';
     const [clicked, setClicked] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -79,6 +80,11 @@ const LoginComponent = ({ }: { isMobile: boolean }) => {
             overflowY: 'auto',
         }}>
             <img src='/logo.svg' alt="Logo" width={100} height={100} style={{ margin: 'auto', display: 'block' }} />
+            {reason === 'expired' && (
+                <Alert severity="warning" sx={{ mb: 2, textAlign: 'left' }}>
+                    Your session has expired. Please sign in again.
+                </Alert>
+            )}
             <LottieWrapper src='/lottie/login-required.lottie' loop={true} />
             <Typography variant="h5" sx={{ mb: 2 }}>
                 {t('login.title')}

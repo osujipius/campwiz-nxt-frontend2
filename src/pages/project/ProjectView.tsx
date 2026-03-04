@@ -14,12 +14,12 @@ import { Link } from "react-router-dom";
 import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
 import NokiberButton from "@/components/NokiberButton";
-import useSession from "@/hooks/useSession";
+import usePermissions from "@/hooks/usePermissions";
 
 const ProjectViewPage = () => {
     const { projectId } = useParams<{ projectId: string }>();
     const { t } = useTranslation();
-    const session = useSession();
+    const { isAdmin: canAccessOtherProject } = usePermissions();
 
     const { data: projectResponse, isLoading: projectLoading } = useSWR(
         projectId ? `/project/${projectId}?includeProjectLeads=true` : null,
@@ -30,8 +30,6 @@ const ProjectViewPage = () => {
         projectId ? `/campaign/?projectId=${projectId}` : null,
         fetchAPIFromBackendSingleWithErrorHandling<Campaign[]>
     );
-
-    const canAccessOtherProject = session && (session.permission & session.permissionMap.PermissionOtherProjectAccess) === session.permissionMap.PermissionOtherProjectAccess;
 
     if (projectLoading || campaignsLoading) {
         return (

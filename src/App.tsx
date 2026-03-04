@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import SessionProvider from './providers/SessionProvider'
+import PrivateRoute from './components/auth/PrivateRoute'
 import LoginPage from './pages/user/Login'
 import Dashboard from './pages/home/Home'
 import CallbackPage from './pages/user/Callback'
@@ -29,15 +30,8 @@ const RoundEvaluatePage = lazy(() => import('./pages/round/RoundEvaluate'))
 const RoundEvaluatedPage = lazy(() => import('./pages/round/RoundEvaluated'))
 const EvaluationEditPage = lazy(() => import('./pages/round/EvaluationEdit'))
 const CallbackErrorPage = lazy(() => import('./pages/user/Callback/error'))
+const ProfilePage = lazy(() => import('./pages/user/Profile'))
 const NotFoundPage = lazy(() => import('./pages/error/NotFound'))
-
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <SessionProvider>
-      {children}
-    </SessionProvider>
-  )
-}
 
 function App() {
   return (
@@ -55,18 +49,19 @@ function App() {
             <Route path="/user/callback/error" element={<CallbackErrorPage />} />
             <Route path="/policy/privacy" element={<PrivacyPolicy />} />
             <Route path="/policy/terms" element={<TermsOfService />} />
+            <Route path="/user/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
             <Route path="/campaign" element={<PrivateRoute><CampaignListPage /></PrivateRoute>} />
             <Route path="/campaign/:campaignId" element={<PrivateRoute><CampaignViewPage /></PrivateRoute>} />
-            <Route path="/campaign/:campaignId/edit" element={<PrivateRoute><CampaignEditPage /></PrivateRoute>} />
+            <Route path="/campaign/:campaignId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateCampaignDetails"><CampaignEditPage /></PrivateRoute>} />
             <Route path="/campaign/:campaignId/categorizer" element={<PrivateRoute><CampaignCategorizerPage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluate" element={<PrivateRoute><RoundEvaluatePage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluated" element={<PrivateRoute><RoundEvaluatedPage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluated/:evaluationId" element={<PrivateRoute><EvaluationEditPage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluate" element={<PrivateRoute requiredPermission="PermissionEvaluateSubmission"><RoundEvaluatePage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluated" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><RoundEvaluatedPage /></PrivateRoute>} />
+            <Route path="/round/:roundId/submission/evaluated/:evaluationId" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><EvaluationEditPage /></PrivateRoute>} />
             <Route path="/project" element={<PrivateRoute><ProjectListPage /></PrivateRoute>} />
-            <Route path="/project/new" element={<PrivateRoute><ProjectCreatePage /></PrivateRoute>} />
+            <Route path="/project/new" element={<PrivateRoute requiredPermission="PermissionCreateProject"><ProjectCreatePage /></PrivateRoute>} />
             <Route path="/project/:projectId" element={<PrivateRoute><ProjectViewPage /></PrivateRoute>} />
-            <Route path="/project/:projectId/edit" element={<PrivateRoute><ProjectEditPage /></PrivateRoute>} />
-            <Route path="/project/:projectId/new" element={<PrivateRoute><CampaignCreatePage /></PrivateRoute>} />
+            <Route path="/project/:projectId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateProject"><ProjectEditPage /></PrivateRoute>} />
+            <Route path="/project/:projectId/new" element={<PrivateRoute requiredPermission="PermissionCreateCampaign"><CampaignCreatePage /></PrivateRoute>} />
             <Route path="/" element={<SessionProvider requireAuth={false}><Dashboard /></SessionProvider>} />
             <Route path="/*" element={<NotFoundPage />} />
           </Routes>

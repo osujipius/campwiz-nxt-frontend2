@@ -38,7 +38,8 @@ export const DocumentationButton = () => {
 }
 
 const HeroBanner = ({ session }: HeroBannerProps) => {
-    const canAccessOtherProject = session !== null && (session.permission & session.permissionMap.PermissionOtherProjectAccess) === session.permissionMap.PermissionOtherProjectAccess;
+    const permOtherProject = session?.permissionMap.PermissionOtherProjectAccess ?? 0;
+    const canAccessOtherProject = session !== null && permOtherProject !== 0 && (session.permission & permOtherProject) === permOtherProject;
     const accessibleProjectId = session?.projectId || null;
     const showProjectDashboardLink = session !== null && (canAccessOtherProject || accessibleProjectId !== null);
     const showLoginButton = session === null;

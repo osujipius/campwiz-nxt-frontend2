@@ -21,13 +21,15 @@ import { updateRoundStatus } from '@/api/campaign';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 
-const CreateRoundButton = ({ onClick }: { onClick: () => void }) => (
-    <Button startIcon={<Add />} variant="contained" color="primary" onClick={onClick} sx={{ m: 1, px: 3, borderRadius: 3 }}>Create Round</Button>
-)
+const CreateRoundButton = ({ onClick }: { onClick: () => void }) => {
+    const { t } = useTranslation();
+    return <Button startIcon={<Add />} variant="contained" color="primary" onClick={onClick} sx={{ m: 1, px: 3, borderRadius: 3 }}>{t('round.createRound')}</Button>
+}
 
-const EditRoundButton = ({ onClick }: { onClick: () => void }) => (
-    <Button startIcon={<EditIcon />} variant="contained" color="primary" onClick={onClick} sx={{ m: 1, px: 3 }}>Edit Round</Button>
-)
+const EditRoundButton = ({ onClick }: { onClick: () => void }) => {
+    const { t } = useTranslation();
+    return <Button startIcon={<EditIcon />} variant="contained" color="primary" onClick={onClick} sx={{ m: 1, px: 3 }}>{t('round.editRound')}</Button>
+}
 
 const MarkAsCompleteButton = ({ latestRound, setAction, refresh, t }: { latestRound: Round | null; setAction: (action: SelectedRoundActionStatus) => void; refresh: () => void; t: TFunction }) => {
     if (!latestRound) return null

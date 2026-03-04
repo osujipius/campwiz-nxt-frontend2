@@ -131,7 +131,26 @@ const CampaignCreatePage = () => {
     return (
         <>
             <Header returnTo={`/project/${projectId}`} />
-            <CampaignCreateForm projectLeads={projectLeads} projectId={projectId!} />
+            <div style={{
+                backgroundImage: "url('/snowy-hill.svg')",
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                minHeight: 'calc(100vh - 128px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <div style={{
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    width: '100%',
+                    minHeight: 'calc(100vh - 128px)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <CampaignCreateForm projectLeads={projectLeads} projectId={projectId!} />
+                </div>
+            </div>
             <Footer />
         </>
     );

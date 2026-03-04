@@ -1,33 +1,59 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { useReducer, useState } from "react";
+import { lazy, useReducer, useState } from "react";
 import { fetchAPIFromBackendSingleWithErrorHandling } from "@/api";
 import { updateCampaign } from "@/api/campaign";
 import type { Campaign } from "@/types/campaign";
 import { campaignReducer, type CampaignUpdate } from "@/types/campaign/create";
 import CampaignEditForm from "@/components/campaign/CampaignEditForm";
 import ReturnButton from "@/components/ReturnButton";
-import { Button, LinearProgress, Skeleton, Typography } from "@mui/material";
+import { Button, LinearProgress, Paper, Skeleton, Typography } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
+import ArrowForward from "@mui/icons-material/ArrowForward";
 import Header from "@/components/home/Header";
 import Footer from "@/components/home/Footer";
+import Logo from "@/components/Logo";
 import usePermissions from "@/hooks/usePermissions";
+
+const LottieWrapper = lazy(() => import("@/components/LottieWrapper"));
+
+const CampaignUpdateSuccess = (c: Campaign) => {
+    return (
+        <Paper sx={{ padding: 2, textAlign: 'center', borderRadius: 7, maxWidth: 800, mx: 'auto', my: 4 }}>
+            <Logo />
+            <LottieWrapper src='/lottie/success.lottie' marginTop="-1em" />
+            <Typography variant="h6" sx={{ mb: 2, textAlign: 'center', mt: -3 }} color='success'>
+                Campaign Updated Successfully
+            </Typography>
+            <Typography variant="subtitle1" sx={{ mb: 2, textAlign: 'center' }}>
+                Campaign <b>{c.name}</b> has been updated.
+            </Typography>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
+                <Link to={`/campaign/${c.campaignId}`}>
+                    <Button variant="contained" color="primary" endIcon={<ArrowForward />} sx={{ borderRadius: 7, mb: 2, mt: 1, px: 2, py: 1 }}>
+                        Go to Campaign
+                    </Button>
+                </Link>
+            </div>
+        </Paper>
+    );
+};
 
 const EditCampaignForm = ({ initialCampaign }: { initialCampaign: CampaignUpdate }) => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const [error, setError] = useState<Error | null>(null);
     const [campaign, campaignDispatch] = useReducer(campaignReducer, initialCampaign);
-    const { trigger, isMutating: loading } = useSWRMutation<Campaign | undefined>(
+    const { data: updatedCampaign = null, trigger, isMutating: loading } = useSWRMutation<Campaign | undefined>(
         `/api/campaign/${initialCampaign.campaignId}`,
         () => updateCampaign(campaign as CampaignUpdate),
-        {
-            onError: setError,
-            onSuccess: () => navigate(`/campaign/${initialCampaign.campaignId}`),
-        }
+        { onError: setError }
     );
+
+    if (updatedCampaign) {
+        return <CampaignUpdateSuccess {...updatedCampaign} />;
+    }
 
     return (
         <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
@@ -103,7 +129,26 @@ const CampaignEditPage = () => {
     return (
         <>
             <Header returnTo={`/campaign/${campaignId}`} />
-            <EditCampaignForm initialCampaign={initialCampaign} />
+            <div style={{
+                backgroundImage: "url('/snowy-hill.svg')",
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                minHeight: 'calc(100vh - 128px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <div style={{
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    width: '100%',
+                    minHeight: 'calc(100vh - 128px)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <EditCampaignForm initialCampaign={initialCampaign} />
+                </div>
+            </div>
             <Footer />
         </>
     );

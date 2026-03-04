@@ -29,6 +29,7 @@
     },
     "campaign": {
         "createCampaign": "Create Campaign",
+        "updateCampaign": "Update Campaign",
         "goToCampaign": "Go to Campaign",
         "showAllCampaigns": "Show All Campaigns",
         "activeCampaigns": "Active Campaigns",
@@ -61,6 +62,10 @@
     "round": {
         "addMyselfAsJury": "Add myself as jury",
         "deleteRoundButton": "Delete",
+        "createRound": "Create Round",
+        "editRound": "Edit Round",
+        "createRoundTitle": "Create a new round",
+        "importSuccessful": "Import Successful",
         "confirmChangeStatus": "Are you sure you want to mark this round as {{status}}?",
         "markAsComplete": "Mark as Complete",
         "status": {
@@ -101,6 +106,9 @@
         "deadLineInMinutes_one": "In a minute",
         "deadLineInMinutes_two": "In two minutes",
         "deadLineInMinutes_other": "In {{count}} minutes",
+        "deadLineInSeconds_one": "In a second",
+        "deadLineInSeconds_two": "In two seconds",
+        "deadLineInSeconds_other": "In {{count}} seconds",
         "deadLinePassed": "Deadline passed",
         "quorum": "Quorum",
         "quorumRequired_one": "Single jury per submission is required",
@@ -226,19 +234,24 @@
         "noCategoriesAvailable": "No categories available",
         "noSubmissions": "No submissions available",
         "noRunningCampaigns": "No running campaigns",
+        "noCoordinators": "No coordinators assigned to this campaign",
         "loadingMyProject": "Failed to load your project",
         "loadingProjects": "Failed to load projects",
         "accessDeniedToProject": "You don't have access to this project",
         "failedToFetchProject": "Failed to fetch your project",
         "failedToFetchCampaign": "Failed to fetch campaign details",
-        "failedToFetchRound": "Failed to fetch round details"
+        "failedToFetchRound": "Failed to fetch round details",
+        "onlyAdminOrProjectLeadCanEdit": "Only an admin or project lead can edit this campaign",
+        "notAllowedToAccessProject": "You are not allowed to access this project",
+        "notAllowedToCreateProject": "You are not allowed to create a project",
+        "categorizerOnlyForCategorizationCampaigns": "The categorizer is only available for categorization campaigns"
     },
     "close": "Close",
     "previous": "Previous",
     "next": "Next",
     "return": "Return",
     "evaluation": {
-        "modifytable": {
+        "modifyTable": {
             "name": "Name",
             "score": "Score",
             "preview": "Preview",
@@ -247,7 +260,10 @@
         "skip": "Skip",
         "edit": "Modify Votes",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "voteSavedSuccessfully": "Your vote has been saved successfully.",
+        "modifyAgain": "Modify Again",
+        "goToList": "Go to the List"
     },
     "submission": {
         "title": "Title",
@@ -256,6 +272,7 @@
         "viewOnCommons": "View on Commons",
         "categories": "Categories",
         "selectCategories": "Select Categories",
+        "noCategoriesSelected": "No categories selected",
         "save": "Save",
         "cancel": "Cancel",
         "skip": "Skip",

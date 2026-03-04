@@ -74,10 +74,27 @@ const ProjectCreatePage = () => {
     return (
         <>
             <Header returnTo="/project" />
+            <div style={{
+                backgroundImage: "url('/red-hill.svg')",
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                minHeight: 'calc(100vh - 128px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <div style={{
+                    backgroundColor: 'rgba(255,255,255,0.4)',
+                    width: '100%',
+                    minHeight: 'calc(100vh - 128px)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
             {createdProject ? <ProjectCreationSuccess {...createdProject} reset={reset} /> : (
                 <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
                     <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
-                        Create Project
+                        {t('project.createProject')}
                     </Typography>
                     {loading && <LinearProgress sx={{ mb: 2 }} />}
                     <ProjectEditForm {...project} loading={loading} dispatch={projectDispatch} disableId={false} autoSuggestId />
@@ -93,11 +110,13 @@ const ProjectCreatePage = () => {
                             startIcon={<AddIcon />}
                             loading={loading}
                         >
-                            Create Project
+                            {t('project.createProject')}
                         </Button>
                     </div>
                 </div>
             )}
+                </div>
+            </div>
             <Footer />
         </>
     );
