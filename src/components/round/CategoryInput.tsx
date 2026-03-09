@@ -3,6 +3,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import ImportIcon from "@/components/ImportIcon";
 import DeleteIcon from '@mui/icons-material/Delete';
+import commons2Server from '/commons2server.svg';
 
 interface CategoryInputProps {
     onSave: (categories: string[]) => void
@@ -33,6 +34,7 @@ const CategoryInput = ({ alreadyIncludedCategories, onSave, saving = false }: Ca
 
     return (
         <div style={{ textAlign: 'center' }}>
+            <img src={commons2Server} alt="Import from Commons" width={400} height={186} style={{ margin: '0 auto', display: 'block' }} />
             {error && <div>Failed to load</div>}
             <Autocomplete
                 options={categoryOptions || []}

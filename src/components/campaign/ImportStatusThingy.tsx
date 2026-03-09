@@ -19,7 +19,7 @@ const ImportStatusThingy = ({ taskId, onSuccess, showCounts = true }: StatusThin
         if (!taskId) return
         const API_PATH = import.meta.env.VITE_BACKEND_API_PATH || '/api/v2';
         const baseURL = import.meta.env.VITE_BACKEND_API_URL || '';
-        const eventSource = new EventSource(`${baseURL}${API_PATH}/task/${taskId}`);
+        const eventSource = new EventSource(`${baseURL}${API_PATH}/task/${taskId}/stream`);
 
         eventSource.addEventListener('task', (event) => {
             const data: Task = JSON.parse(event.data)

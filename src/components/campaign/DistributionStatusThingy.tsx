@@ -1,6 +1,7 @@
 import type { Task } from "@/types/task"
 import LottieWrapper from "@/components/LottieWrapper"
 import { useEffect, useState } from "react"
+import distributingLogo from '/distributing.svg'
 
 type StatusThingyProps = {
     taskId: string
@@ -14,7 +15,7 @@ const DistributionStatusThingy = ({ taskId, onSuccess }: StatusThingyProps) => {
         if (!taskId) return
         const API_PATH = import.meta.env.VITE_BACKEND_API_PATH || '/api/v2';
         const baseURL = import.meta.env.VITE_BACKEND_API_URL || '';
-        const eventSource = new EventSource(`${baseURL}${API_PATH}/task/${taskId}`);
+        const eventSource = new EventSource(`${baseURL}${API_PATH}/task/${taskId}/stream`);
 
         eventSource.addEventListener('task', (event) => {
             const data = JSON.parse(event.data)
@@ -35,7 +36,7 @@ const DistributionStatusThingy = ({ taskId, onSuccess }: StatusThingyProps) => {
     }, [onSuccess, taskId])
 
     return (<>
-        {status === 'pending' && <LottieWrapper src="/lottie/loading.lottie" />}
+        {status === 'pending' && <img src={distributingLogo} alt="distributing" width={200} height={200} style={{ margin: '0 auto', display: 'block' }} />}
         {status === 'success' && <LottieWrapper src="/lottie/success.lottie" />}
         {status === 'error' && <LottieWrapper src="/lottie/error.lottie" />}
     </>)

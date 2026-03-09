@@ -41,31 +41,31 @@ function App() {
       <BrowserRouter>
         <DirectionManager />
         <ErrorBoundary>
-        <Suspense fallback={<GlobalLoadingPage />}>
-          <Routes>
-            <Route path="/user/login" element={<LoginPage />} />
-            <Route path="/user/callback" element={<CallbackPage />} />
-            <Route path="/user/callback/write" element={<CallbackWritePage />} />
-            <Route path="/user/callback/error" element={<CallbackErrorPage />} />
-            <Route path="/policy/privacy" element={<PrivacyPolicy />} />
-            <Route path="/policy/terms" element={<TermsOfService />} />
-            <Route path="/user/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-            <Route path="/campaign" element={<PrivateRoute><CampaignListPage /></PrivateRoute>} />
-            <Route path="/campaign/:campaignId" element={<PrivateRoute><CampaignViewPage /></PrivateRoute>} />
-            <Route path="/campaign/:campaignId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateCampaignDetails"><CampaignEditPage /></PrivateRoute>} />
-            <Route path="/campaign/:campaignId/categorizer" element={<PrivateRoute><CampaignCategorizerPage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluate" element={<PrivateRoute requiredPermission="PermissionEvaluateSubmission"><RoundEvaluatePage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluated" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><RoundEvaluatedPage /></PrivateRoute>} />
-            <Route path="/round/:roundId/submission/evaluated/:evaluationId" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><EvaluationEditPage /></PrivateRoute>} />
-            <Route path="/project" element={<PrivateRoute><ProjectListPage /></PrivateRoute>} />
-            <Route path="/project/new" element={<PrivateRoute requiredPermission="PermissionCreateProject"><ProjectCreatePage /></PrivateRoute>} />
-            <Route path="/project/:projectId" element={<PrivateRoute><ProjectViewPage /></PrivateRoute>} />
-            <Route path="/project/:projectId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateProject"><ProjectEditPage /></PrivateRoute>} />
-            <Route path="/project/:projectId/new" element={<PrivateRoute requiredPermission="PermissionCreateCampaign"><CampaignCreatePage /></PrivateRoute>} />
-            <Route path="/" element={<SessionProvider requireAuth={false}><Dashboard /></SessionProvider>} />
-            <Route path="/*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
+          <Suspense fallback={<GlobalLoadingPage />}>
+            <Routes>
+              <Route path="/user/login" element={<LoginPage />} />
+              <Route path="/user/callback" element={<CallbackPage />} />
+              <Route path="/user/callback/write" element={<CallbackWritePage />} />
+              <Route path="/user/callback/error" element={<CallbackErrorPage />} />
+              <Route path="/policy/privacy" element={<PrivacyPolicy />} />
+              <Route path="/policy/terms" element={<TermsOfService />} />
+              <Route path="/user/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+              <Route path="/campaign" element={<PrivateRoute><CampaignListPage /></PrivateRoute>} />
+              <Route path="/campaign/:campaignId" element={<PrivateRoute><CampaignViewPage /></PrivateRoute>} />
+              <Route path="/campaign/:campaignId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateCampaignDetails"><CampaignEditPage /></PrivateRoute>} />
+              <Route path="/campaign/:campaignId/categorizer" element={<PrivateRoute><CampaignCategorizerPage /></PrivateRoute>} />
+              <Route path="/round/:roundId/submission/evaluate" element={<PrivateRoute requiredPermission="PermissionEvaluateSubmission"><RoundEvaluatePage /></PrivateRoute>} />
+              <Route path="/round/:roundId/submission/evaluated" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><RoundEvaluatedPage /></PrivateRoute>} />
+              <Route path="/round/:roundId/submission/evaluated/:evaluationId" element={<PrivateRoute requiredPermission="PermissionSeeOwnEvaluationResult"><EvaluationEditPage /></PrivateRoute>} />
+              <Route path="/project" element={<PrivateRoute><ProjectListPage /></PrivateRoute>} />
+              <Route path="/project/new" element={<PrivateRoute requiredPermission="PermissionCreateProject"><ProjectCreatePage /></PrivateRoute>} />
+              <Route path="/project/:projectId" element={<PrivateRoute><ProjectViewPage /></PrivateRoute>} />
+              <Route path="/project/:projectId/edit" element={<PrivateRoute requiredPermission="PermissionUpdateProject"><ProjectEditPage /></PrivateRoute>} />
+              <Route path="/project/:projectId/new" element={<PrivateRoute requiredPermission="PermissionCreateCampaign"><CampaignCreatePage /></PrivateRoute>} />
+              <Route path="/" element={<SessionProvider requireAuth={false}><Dashboard /></SessionProvider>} />
+              <Route path="/*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </ErrorBoundary>
       </BrowserRouter>
     </ThemeProvider>

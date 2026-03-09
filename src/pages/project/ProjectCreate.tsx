@@ -1,4 +1,4 @@
-import { Button, LinearProgress, Paper, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { lazy, useReducer, useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { Link } from "react-router-dom";
@@ -10,9 +10,8 @@ import ReturnButton from "@/components/ReturnButton";
 import type { Project } from "@/types/project";
 import { initialProjectCreate, projectCreateReducer } from "@/types/project";
 import { createProject } from "@/api/project";
-import Header from "@/components/home/Header";
-import Footer from "@/components/home/Footer";
 import Logo from "@/components/Logo";
+import LoadingPopup from "@/components/LoadingPopup";
 import usePermissions from "@/hooks/usePermissions";
 
 const LottieWrapper = lazy(() => import("@/components/LottieWrapper"));
@@ -62,63 +61,50 @@ const ProjectCreatePage = () => {
     }
 
     if (!canAccessOtherProject) {
-        return (
-            <>
-                <Header returnTo="/project" />
-                <Typography sx={{ m: 2 }}>{t('error.notAllowedToCreateProject')}</Typography>
-                <Footer />
-            </>
-        );
+        return <div>{t('error.notAllowedToCreateProject')}</div>;
     }
 
     return (
-        <>
-            <Header returnTo="/project" />
+        <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            display: 'flex',
+            justifyContent: 'center', alignItems: 'center',
+            backgroundImage: "url('/red-hill.svg')",
+            backgroundSize: 'cover',
+        }}>
             <div style={{
-                backgroundImage: "url('/red-hill.svg')",
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                minHeight: 'calc(100vh - 128px)',
+                position: 'relative', width: '100%', height: '100%',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                backgroundColor: 'rgba(255,255,255,0.4)',
+                justifyContent: 'center', alignItems: 'center',
             }}>
-                <div style={{
-                    backgroundColor: 'rgba(255,255,255,0.4)',
-                    width: '100%',
-                    minHeight: 'calc(100vh - 128px)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-            {createdProject ? <ProjectCreationSuccess {...createdProject} reset={reset} /> : (
-                <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
-                    <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
-                        {t('project.createProject')}
-                    </Typography>
-                    {loading && <LinearProgress sx={{ mb: 2 }} />}
-                    <ProjectEditForm {...project} loading={loading} dispatch={projectDispatch} disableId={false} autoSuggestId />
-                    {error && <Typography variant="body1" color="error" sx={{ mb: 1 }}>{error.message}</Typography>}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                        <ReturnButton disabled={loading} sx={{ m: 0, borderRadius: 10, px: 2 }} />
-                        <Button
-                            onClick={() => trigger().catch(setError)}
-                            variant="contained"
-                            color="success"
-                            disabled={loading}
-                            sx={{ borderRadius: 10 }}
-                            startIcon={<AddIcon />}
-                            loading={loading}
-                        >
+                {createdProject ? <ProjectCreationSuccess {...createdProject} reset={reset} /> : (
+                    <Paper sx={{ padding: 2, px: 3, width: '100%', maxWidth: 800, borderRadius: 6 }}>
+                        <Logo />
+                        <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
                             {t('project.createProject')}
-                        </Button>
-                    </div>
-                </div>
-            )}
-                </div>
+                        </Typography>
+                        {loading && <LoadingPopup src="/lottie/creating.lottie" />}
+                        <ProjectEditForm {...project} loading={loading} dispatch={projectDispatch} disableId={false} autoSuggestId />
+                        {error && <Typography variant="body1" color="error" sx={{ mb: 1 }}>{error.message}</Typography>}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                            <ReturnButton disabled={loading} sx={{ m: 0, borderRadius: 10, px: 2 }} />
+                            <Button
+                                onClick={() => trigger().catch(setError)}
+                                variant="contained"
+                                color="success"
+                                disabled={loading}
+                                sx={{ borderRadius: 10 }}
+                                startIcon={<AddIcon />}
+                                loading={loading}
+                            >
+                                {t('project.createProject')}
+                            </Button>
+                        </div>
+                    </Paper>
+                )}
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }
 

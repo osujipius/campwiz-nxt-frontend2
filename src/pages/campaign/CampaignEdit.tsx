@@ -9,12 +9,11 @@ import type { Campaign } from "@/types/campaign";
 import { campaignReducer, type CampaignUpdate } from "@/types/campaign/create";
 import CampaignEditForm from "@/components/campaign/CampaignEditForm";
 import ReturnButton from "@/components/ReturnButton";
-import { Button, LinearProgress, Paper, Skeleton, Typography } from "@mui/material";
+import { Button, Paper, Skeleton, Typography } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import ArrowForward from "@mui/icons-material/ArrowForward";
-import Header from "@/components/home/Header";
-import Footer from "@/components/home/Footer";
 import Logo from "@/components/Logo";
+import LoadingPopup from "@/components/LoadingPopup";
 import usePermissions from "@/hooks/usePermissions";
 
 const LottieWrapper = lazy(() => import("@/components/LottieWrapper"));
@@ -57,10 +56,11 @@ const EditCampaignForm = ({ initialCampaign }: { initialCampaign: CampaignUpdate
 
     return (
         <div className="p-2 px-3 rounded-2xl w-full max-w-4xl relative h-max bg-[#fefdfd6e] dark:bg-[#1f1f1f] m-auto" style={{ marginTop: 16, marginBottom: 16 }}>
+            <Logo />
             <Typography variant="h3" sx={{ mb: 4, textAlign: 'center', fontSize: { xs: 24, sm: 48 } }}>
                 {t('campaign.updateCampaign')}
             </Typography>
-            {loading && <LinearProgress sx={{ mb: 2 }} />}
+            {loading && <LoadingPopup />}
             <CampaignEditForm {...campaign} loading={loading} dispatch={campaignDispatch} disableOnPrivate t={t} />
             {error && <Typography variant="body1" color="error" sx={{ mb: 1 }}>{error.message}</Typography>}
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
@@ -91,34 +91,19 @@ const CampaignEditPage = () => {
     );
 
     if (isLoading) {
-        return (
-            <>
-                <Header returnTo="/" />
-                <Skeleton variant="rectangular" width="100%" height={400} sx={{ m: 1 }} />
-            </>
-        );
+        return <Skeleton variant="rectangular" width="100%" height={400} sx={{ m: 1 }} />;
     }
 
     if (!campaignResponse) return null;
     if ('detail' in campaignResponse) {
-        return (
-            <>
-                <Header returnTo="/" />
-                <Typography sx={{ m: 2 }}>{t(campaignResponse.detail)}</Typography>
-            </>
-        );
+        return <div>{t(campaignResponse.detail)}</div>;
     }
 
     const campaign = campaignResponse.data;
     const { canEditCampaignInProject } = usePermissions();
 
     if (!canEditCampaignInProject(campaign.projectId)) {
-        return (
-            <>
-                <Header returnTo={`/campaign/${campaignId}`} />
-                <Typography sx={{ m: 2 }}>{t('error.onlyAdminOrProjectLeadCanEdit')}</Typography>
-            </>
-        );
+        return <div>{t('error.onlyAdminOrProjectLeadCanEdit')}</div>;
     }
 
     const initialCampaign: CampaignUpdate = {
@@ -127,30 +112,23 @@ const CampaignEditPage = () => {
     };
 
     return (
-        <>
-            <Header returnTo={`/campaign/${campaignId}`} />
+        <div style={{
+            display: 'flex',
+            width: '100%', height: '100vh',
+            justifyContent: 'center', alignItems: 'center',
+            backgroundImage: "url('/snowy-hill.svg')",
+            backgroundRepeat: 'repeat-y',
+            backgroundSize: 'cover',
+        }}>
             <div style={{
-                backgroundImage: "url('/snowy-hill.svg')",
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                minHeight: 'calc(100vh - 128px)',
+                width: '100%', height: '100%',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                backgroundColor: 'rgba(255,255,255,0.4)',
+                justifyContent: 'center', alignItems: 'center',
             }}>
-                <div style={{
-                    backgroundColor: 'rgba(255,255,255,0.4)',
-                    width: '100%',
-                    minHeight: 'calc(100vh - 128px)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    <EditCampaignForm initialCampaign={initialCampaign} />
-                </div>
+                <EditCampaignForm initialCampaign={initialCampaign} />
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }
 

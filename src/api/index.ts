@@ -6,8 +6,13 @@ export const fetchFromBackend = async (path: string, options?: RequestInit): Pro
     if (!options) {
         options = {}
     }
+    const headers = new Headers(options.headers)
+    if (options.body && !headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json')
+    }
     options = ({
         ...options,
+        headers,
         credentials: 'include',
     })
     const res = await fetch(`${baseURL}${path}`, options)
